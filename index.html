@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio - BTS SIO SISR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+  <style>
+    :root {
+      --primary-color: #3B82F6;
+      --secondary-color: #2563EB;
+      --dark-bg: #0F172A;
+      --mid-bg: #1E293B;
+      --light-bg: #F1F5F9;
+      --text-dark: #0F172A;
+      --text-light: #6B7280;
+      --accent: #38BDF8;
+      --white: #FFFFFF;
+      --gray-light: #E5E7EB;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background-color: var(--light-bg);
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, var(--dark-bg) 0%, var(--mid-bg) 100%);
+      color: var(--white);
+      position: fixed;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 0;
+      z-index: 1000;
+      box-shadow: 5px 0 20px rgba(15, 23, 42, 0.6);
+    }
+
+    .sidebar-header { text-align: center; padding: 0 1.5rem; margin-bottom: 2rem; }
+
+    .sidebar-header h1 { font-size: 1.3rem; margin-bottom: 0.3rem; font-weight: 600; }
+    .sidebar-header p { font-size: 0.9rem; color: #CBD5F5; }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .social-links a:hover { background: var(--accent); transform: translateY(-3px); }
+
+    .nav-menu { flex: 1; padding: 0 1rem; margin-top: 1rem; }
+    .nav-menu ul { list-style: none; }
+    .nav-menu li { margin-bottom: 0.5rem; }
+
+    .nav-menu a {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 1.3rem;
+      color: #E5E7EB;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .nav-menu a i { width: 20px; font-size: 1.05rem; }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      color: var(--white);
+      transform: translateX(5px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .sidebar-footer {
+      padding: 1.3rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9CA3AF;
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    /* Burger */
+    .burger {
+      display: none;
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 2000;
+      background: var(--dark-bg);
+      padding: 9px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
+    }
+
+    .burger span {
+      width: 24px;
+      height: 3px;
+      background: var(--white);
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    /* Main */
+    .main-content { margin-left: 280px; flex: 1; width: calc(100% - 280px); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('background.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+      overflow: hidden;
+      padding: 2.5rem 2rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      background: #38BDF8;
+      border-radius: 50%;
+      filter: blur(130px);
+      opacity: 0.18;
+      top: -220px;
+      right: -220px;
+      z-index: 0;
+    }
+
+    .hero-content {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    /* Effet d'écriture */
+    .typewriter {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 0.12em solid #BFDBFE;
+      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: #BFDBFE; } }
+
+    .hero-text h2 { font-size: 1.4rem; color: #BFDBFE; margin-bottom: 1rem; font-weight: 500; }
+    .hero-text p { font-size: 1.02rem; color: #E5E7EB; margin-bottom: 2rem; line-height: 1.7; }
+
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+
+    .badge {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #E5E7EB;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge i { color: var(--accent); }
+
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+    .btn {
+      padding: 0.9rem 1.8rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      color: var(--white);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.65);
+      filter: brightness(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #E5E7EB;
+      border: 1px solid #93C5FD;
+    }
+
+    .btn-outline:hover { background: rgba(15, 23, 42, 0.9); transform: translateY(-3px); }
+
+    .hero-image { display: none; }
+
+    /* Sections générales */
+    .section { padding: 4.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.1rem;
+      color: var(--text-dark);
+      margin-bottom: 0.8rem;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      border-radius: 999px;
+    }
+
+    .section-subtitle { text-align: center; color: var(--text-light); font-size: 1rem; margin-bottom: 3.2rem; }
+
+    /* A Propos - MODIFIÉ */
+    /* On change le layout en colonne pour cette section spécifique */
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center; /* Centrer le contenu */
+    }
+
+    .about-text {
+      text-align: center; /* Texte centré */
+      max-width: 800px;
+    }
+    
+    .about-text p { color: var(--text-light); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem; }
+    .about-text strong { color: var(--secondary-color); font-weight: 600; }
+    
+    .about-actions { 
+      margin-top: 1rem; 
+      display: flex;
+      justify-content: center;
+    }
+
+    #about .btn.btn-outline { background: var(--white); color: var(--secondary-color); border-color: var(--secondary-color); }
+    #about .btn.btn-outline:hover { background: var(--secondary-color); color: var(--white); }
+
+    .btn-cv { background: var(--white); color: var(--secondary-color); border-color: var(--secondary-color); }
+    .btn-cv:hover { background: var(--secondary-color); color: var(--white); }
+
+    /* Skills: Maintenant en dessous */
+    .skills-container {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .cert-skills {
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+    }
+    .cert-skills + .about-actions {
+      margin-top: 2rem;
+    }
+    .skills { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive */
+      gap: 1.3rem; 
+    }
+
+    .skill-item {
+      background: var(--white);
+      padding: 1.3rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #E2E8F0;
+    }
+
+    .skill-item:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12); }
+    .skill-item i { font-size: 1.7rem; color: var(--primary-color); margin-bottom: 0.4rem; }
+    .skill-item h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+    .skill-item p { font-size: 0.85rem; color: var(--text-light); margin: 0; }
+
+    /* Parcours */
+    .resume-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+    .resume-column h3 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--secondary-color); text-align: center; }
+
+    .timeline { position: relative; padding: 2rem 0; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary-color), var(--accent));
+    }
+
+    .timeline-item { position: relative; padding-left: 55px; margin-bottom: 2.3rem; }
+
+    .timeline-dot {
+      position: absolute;
+      left: 10px;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    .timeline-content {
+      background: var(--white);
+      padding: 1.4rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.08);
+      border: 1px solid #E2E8F0;
+    }
+
+    .timeline-content h4 { color: var(--secondary-color); margin-bottom: 0.4rem; font-size: 1rem; }
+    .timeline-content .date { color: var(--text-light); font-size: 0.8rem; margin-bottom: 0.6rem; }
+    .timeline-content p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
+
+    /* Fiches entreprises */
+    .alternances-wrapper { margin-top: 2.4rem; }
+
+    .alternances-title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .company-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.6rem;
+    }
+
+    .company-card {
+      background: var(--white);
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      align-items: stretch;
+    }
+
+    .company-logo {
+      background: linear-gradient(135deg, #DBEAFE, #F1F5F9);
+      border-right: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .company-logo img {
+      width: 100%;
+      max-width: 90px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.12));
+    }
+
+    .company-info { padding: 1.3rem 1.3rem 1.1rem; }
+
+    .company-info h4 {
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+    }
+
+    .info-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 0.7rem;
+      display: inline-block;
+      position: relative;
+    }
+
+    .info-title::after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      margin-top: 0.35rem;
+    }
+
+    .info-list { list-style: none; display: grid; gap: 0.55rem; }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0.8rem;
+      align-items: start;
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 0.88rem;
+    }
+
+    .info-value {
+      color: var(--text-light);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .mini-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.9rem;
+    }
+
+    .mini-badge {
+      background: #DBEAFE;
+      color: var(--secondary-color);
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    /* Projets */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; }
+
+    .project-card {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #E2E8F0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16); }
+
+    .project-image {
+      width: 100%;
+      height: 160px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* Empêche l'image de dépasser */
+    }
+    
+    /* MODIF IMAGE PROJET */
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Remplit tout l'espace */
+        object-position: center; /* Centre l'image dans son conteneur */
+        display: block; /* Supprime les espaces blancs éventuels */
+    }
+
+    .project-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-content h3 { font-size: 1.15rem; margin-bottom: 0.7rem; color: var(--text-dark); }
+    .project-content p { color: var(--text-light); margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.6; }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
+    .tag { background: #DBEAFE; color: var(--secondary-color); padding: 0.28rem 0.7rem; border-radius: 999px; font-size: 0.78rem; font-weight: 500; }
+
+    .project-actions { margin-top: auto; display: flex; }
+    .btn-project {
+      padding: 0.72rem 1.25rem;
+      font-size: 0.88rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Certifications */
+    .certifications-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem; }
+
+    .cert-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 1.6rem 1.5rem;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      border: 1px solid #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .cert-header { display: flex; align-items: center; gap: 0.8rem; }
+
+    .cert-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      /* background supprimé pour laisser place à l'image */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    
+    /* MODIF IMAGE CERTIF */
+    .cert-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .cert-title { font-size: 1rem; font-weight: 600; color: var(--text-dark); }
+    .cert-issuer { font-size: 0.85rem; color: var(--text-light); }
+    .cert-meta { font-size: 0.85rem; color: var(--text-light); }
+
+    /* Veille */
+    .veille-container { max-width: 900px; margin: 0 auto; }
+
+    .veille-intro {
+      background: var(--white);
+      padding: 1.7rem;
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .veille-intro h3 { color: var(--secondary-color); margin-bottom: 0.6rem; font-size: 1.1rem; }
+    .veille-intro p { color: var(--text-light); line-height: 1.7; font-size: 0.93rem; }
+
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .reference-card {
+      background: var(--white);
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .reference-card h4 {
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .reference-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+      flex: 1;
+    }
+
+    .reference-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .reference-card a {
+      align-self: flex-start;
+      padding: 0.7rem 1.3rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent));
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .reference-card a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
+    }
+
+    .veille-list { list-style: none; }
+
+    .veille-item {
+      background: var(--white);
+      padding: 1.6rem;
+      border-radius: 12px;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      transition: transform 0.3s;
+      border: 1px solid #E2E8F0;
+    }
+
+    .veille-item:hover { transform: translateX(6px); }
+
+    .veille-item-header { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 0.8rem; }
+
+    .veille-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .veille-item h3 { color: var(--text-dark); font-size: 1rem; margin-bottom: 0.1rem; }
+    .veille-date { color: var(--text-light); font-size: 0.8rem; }
+    .veille-item p { color: var(--text-light); line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.9rem; }
+
+    /* Contact */
+    .contact-container { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 3rem; }
+
+    .contact-form {
+      background: var(--white);
+      padding: 2.1rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.1);
+      border: 1px solid #E2E8F0;
+    }
+
+    .form-group { margin-bottom: 1.3rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 500; color: var(--text-dark); font-size: 0.92rem; }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border: 1.8px solid var(--gray-light);
+      border-radius: 9px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.93rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: var(--white);
+      padding: 1.4rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      border: 1px solid #E2E8F0;
+    }
+
+    .contact-item i { font-size: 1.6rem; color: var(--primary-color); }
+    .contact-item-text h3 { font-size: 0.98rem; margin-bottom: 0.2rem; }
+    .contact-item-text p { color: var(--text-light); margin: 0; font-size: 0.9rem; }
+
+    footer { background: var(--dark-bg); color: var(--white); text-align: center; padding: 1.7rem; font-size: 0.85rem; margin-top: 2rem; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.active { transform: translateX(0); }
+      .burger { display: flex; }
+      .main-content { margin-left: 0; width: 100%; }
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-image { display: none; }
+      .hero-text h1 { font-size: 2.3rem; }
+      .hero-buttons { justify-content: center; }
+      .about-content,
+      .contact-container,
+      .resume-grid { grid-template-columns: 1fr; }
+
+      .company-cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: 3.2rem 1.3rem; }
+      .hero { padding: 5rem 1.4rem 3rem; }
+
+      .company-card { grid-template-columns: 1fr; }
+      .company-logo { border-right: none; border-bottom: 1px solid #E2E8F0; }
+      .info-row { grid-template-columns: 1fr; gap: 0.2rem; }
+      .info-label { font-size: 0.86rem; }
+      .info-value { font-size: 0.86rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>Gad LEVI</h1>
+      <p>Technicien Informatique</p>
+
+      <div class="social-links">
+        <a href="https://github.com/gadlevi" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/gad-levi " target="_blank"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#hero" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+        <li><a href="#about"><i class="fas fa-user"></i> A Propos</a></li>
+        <li><a href="#resume"><i class="fas fa-graduation-cap"></i> Parcours</a></li>
+        <li><a href="#certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
+        <li><a href="#portfolio"><i class="fas fa-folder-open"></i> Projets</a></li>
+        <li><a href="#services"><i class="fas fa-eye"></i> Veilles</a></li>
+        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>&copy; <br>Portfolio BTS SIO SISR</p>
+    </div>
+  </aside>
+
+  <div class="burger" id="burger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <main class="main-content">
+
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1><span class="typewriter">Bienvenue sur mon portfolio</span></h1>
+          <h2>Étudiant en BTS SIO option SISR</h2>
+
+          <div class="hero-badges">
+            <span class="badge"><i class="fas fa-network-wired"></i> Réseaux & Systèmes</span>
+            <span class="badge"><i class="fas fa-shield-alt"></i> Cybersécurité</span>
+            <span class="badge"><i class="fas fa-server"></i> Administration Windows / Linux</span>
+          </div>
+
+          <div class="hero-buttons">
+            <a href="#projets" class="btn btn-outline"><i class="fas fa-folder-open"></i> Voir mes projets</a>
+            <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Me contacter</a>
+          </div>
+        </div>
+
+        <div class="hero-image"></div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2 class="section-title">A Propos</h2>
+      <p class="section-subtitle">Qui je suis et ce que je fais en BTS SIO SISR</p>
+
+      <div class="about-content">
+        
+        <div class="about-text">
+          <p>
+            Passionné par l’informatique, je suis actuellement étudiant en <strong>BTS SIO
+            option SISR</strong> en alternance. 
+          </p>
+          <p>
+            Grâce à ce BTS, je développe des compétences en systèmes, réseaux et cybersécurité, tout en mettant en pratique
+            mes connaissances au sein de mon entreprise.
+            J’interviens sur différentes missions telles que la <strong>maintenance</strong> des équipements et le <strong>support technique</strong> aux utilisateurs
+          </p>
+          <p>
+            Rigoureux et organisé, je sais travailler en <strong>équipe</strong> et m’adapter rapidement. 
+            Je propose des <strong>solutions efficaces</strong> tout en assurant une communication, aussi bien avec les utilisateurs qu’avec les équipes techniques.
+          </p>
+
+          <div class="about-actions">
+            <a href="Gad.pdf" target="_blank" class="btn btn-outline">
+              <i class="fas fa-file-pdf"></i> Voir mon CV
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="resume" class="section">
+      <h2 class="section-title">Parcours</h2>
+      <p class="section-subtitle">Mon parcours scolaire et professionnel</p>
+
+      <div class="resume-grid">
+        <div class="resume-column">
+          <h3>Parcours scolaire</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>BTS SIO option SISR</h4>
+                <div class="date">Lycée Ort Montreuil Daniel Mayer - Montreuil 2024 - 2026</div>
+                <p>BTS Services Informatiques aux Organisations option Solutions d'Infrastructure, Systèmes et Réseaux</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Baccalauréat</h4>
+                <div class="date">Lycée Lucien De Hirsch - Paris 2024</div>
+                <p>Bac général spécialité mathématique et physique.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="resume-column">
+          <h3>Parcours professionnel</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Groupe SNCF - eSNCF solutions / Alternance</h4>
+                <div class="date">Septembre 2025 - Juillet 2026</div>
+                <p> - Diagnostic et résolution d’incidents</p>
+                <p> - Assistance aux utilisateurs</p>
+                <p> - Maintenance des postes de travail</p>
+                <p> - Intervention technique sur site ou à distance</p>
+                <p> - Gestion du matériel et des outils informatiques</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h4>Techwood Sotech International / Alternance</h4>
+                <div class="date">Septembre 2024 - Juillet 2025</div>
+                <p> - Mise à jour et gestion du site web</p>
+                <p> - Création et modification de nouveaux produits avec Photoshop</p>
+                <p> - Saisie et gestion des données produits sur Excel </p>
+                <p> - Support aux utilisateurs</p>
+                <p> - Utilisation de l'intelligence artificielle</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-container cert-skills">
+            <h3 style="text-align: center; margin-bottom: 1rem; color: var(--secondary-color);">Compétences</h3>
+            <div class="skills">
+              <div class="skill-item">
+                <i class="fas fa-network-wired"></i>
+                <h3>Réseaux</h3>
+                <p>Adressage IP, VLAN, routage statique, DHCP, DNS, configuration de switchs/routeurs.</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-server"></i>
+                <h3>Systèmes</h3>
+                <p>Installation et administration de serveurs Windows et Linux, création de bases de donées MySQL, services réseau.</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Sécurité</h3>
+                <p>Pare-feu, VPN, droits d’accès, sauvegardes, bonnes pratiques de cybersécurité.</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-headset"></i>
+                <h3>Support</h3>
+                <p>Assistance aux utilisateurs, dépannage poste client, réponse aux incidents, documentation technique.</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-layer-group"></i>
+                <h3>Virtualisation</h3>
+                <p>Vmware, debian, windows server, kali-linux (Nmap, reconnaissance réseau).</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Supervision</h3>
+                <p>HAproxy (load balancing), Zabbix (Configuration de l’agent, alertes et tableaux de bord).</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-code"></i>
+                <h3>Développement</h3>
+                <p>VS Code, Intellij IDEA, HTML (Réalisation du portfolio), SQL (Requêtes SQL, jointures).</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-terminal"></i>
+                <h3>Scripting</h3>
+                <p>Phyton (Développement de petits scripts).</p>
+              </div>
+              <div class="skill-item">
+                <i class="fas fa-folder-open"></i>
+                <h3>Gestion de projet</h3>
+                <p>Analyse des besoins, documentation technique, travail en équipe.</p>
+              </div>
+            </div>
+        </div>
+
+      <div class="about-actions" style="margin-top: 2.5rem;">
+            <a href="Tableau de synthese - Epreuve E5 - 2025.pdf" class="btn btn-outline btn-cv">
+              <i class="fas fa-table"></i> Tableau de compétences
+            </a>
+      </div>
+    </section>
+
+    <section id="certifications" class="section">
+        <h2 class="section-title">Certifications</h2>
+        <p class="section-subtitle">Mes certifications professionnelles</p>
+  
+        <div class="certifications-grid">
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                <img src="anssi.png" alt="Logo ANSSI">
+              </div>
+              <div>
+                <h4 class="cert-title">SecNumAcadémie</h4>
+                <div class="cert-issuer">Délivrée par l'ANSSI, pour initier à la cybersécurité</div>
+              </div>
+            </div>
+            <p class="cert-meta">Validé en 2025</p>
+          </div>
+  
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                <img src="cnil.png" alt="Logo CNIL">
+              </div>
+              <div>
+                <h4 class="cert-title">Atelier RGPD</h4>
+                <div class="cert-issuer">Délivrée par la CNIL, pour sensibiliser à la protection des données.</div>
+              </div>
+            </div>
+            <p class="cert-meta">Validé en 2025</p>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                 <img src="cisco.png" alt="Logo CISCO">
+              </div>
+              <div>
+                <h4 class="cert-title">Networking Basics</h4>
+                <div class="cert-issuer">CISCO : Principes fondamentaux des réseaux</div>
+              </div>
+            </div>
+            <p class="cert-meta">Validé en 2025</p>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                 <img src="cisco.png" alt="Logo CISCO">
+              </div>
+              <div>
+                <h4 class="cert-title">Network Support and Security</h4>
+                <div class="cert-issuer">CISCO : Support et sécurité réseau</div>
+              </div>
+            </div>
+            <p class="cert-meta">Validé en 2025</p>
+          </div>
+  
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                 <img src="cisco.png" alt="Logo CISCO">
+              </div>
+              <div>
+                <h4 class="cert-title">CCNA 1 & 2</h4>
+                <div class="cert-issuer">Cisco</div>
+              </div>
+            </div>
+            <p class="cert-meta">En cours d'acquisition</p>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-header">
+              <div class="cert-icon">
+                 <img src="linux.png" alt="Logo Linux">
+              </div>
+              <div>
+                <h4 class="cert-title">NDG Linux</h4>
+                <div class="cert-issuer">Introduction aux concepts fondamentaux et aux bases de la ligne de commande</div>
+              </div>
+            </div>
+            <p class="cert-meta">En cours d'acquisition</p>
+          </div>
+        </div>
+    </section>
+
+    <section id="entreprises" class="section" style="margin-bottom: 3rem;">
+      <h2 class="section-title">Présentation des entreprises</h2>
+      <p class="section-subtitle">Les entreprises où j'ai réalisé mes alternances</p>
+
+      <div class="company-cards">
+        <article class="company-card">
+          <div class="company-logo">
+            <img src="logo-sncf.png" alt="Logo SNCF">
+          </div>
+
+          <div class="company-info">
+            <h4>SNCF</h4>
+
+            <div class="info-title">Informations sur l'entreprise :</div>
+            <ul class="info-list">
+              <li class="info-row">
+                <span class="info-label">Nom :</span>
+                <span class="info-value">eSNCF Solution</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Siège social :</span>
+                <span class="info-value">Saint-Denis 93066</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Forme juridique :</span>
+                <span class="info-value">SA à conseil d'administration (s.a.i.)</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Typologie :</span>
+                <span class="info-value">Grande Entreprise (GE) avec 290 000 employés</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Chiffre d'affaire :</span>
+                <span class="info-value">43,4 milliards € (2024), 2e entreprise de transport au monde</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Domaine d'activité :</span>
+                <span class="info-value">Transport ferroviaire, mobilité, services aux voyageurs.</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Poste :</span>
+                <span class="info-value">Technicien informatique (support / maintenance)</span>
+              </li>
+            </ul>
+
+            <div class="mini-badges">
+              <span class="mini-badge">Support N1/N2</span>
+              <span class="mini-badge">Incidents</span>
+              <span class="mini-badge">Parc informatique</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="company-card">
+          <div class="company-logo">
+            <img src="logo-techwood.png" alt="Logo Techwood">
+          </div>
+
+          <div class="company-info">
+            <h4>Techwood</h4>
+
+            <div class="info-title">Informations sur l'entreprise :</div>
+            <ul class="info-list">
+              <li class="info-row">
+                <span class="info-label">Nom :</span>
+                <span class="info-value">Techwood Sotech International</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Siège social :</span>
+                <span class="info-value">Ivry sur Seine 94200</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Forme juridique :</span>
+                <span class="info-value">SARL, société a responsabilité limitée</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Typologie :</span>
+                <span class="info-value">PME de 15 employés</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Chiffre d'affaire :</span>
+                <span class="info-value">16 millions € (2024)</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Domaine d'activité :</span>
+                <span class="info-value">Commerce de gros (interentreprises) d'appareils électroménagers.</span>
+              </li>
+              <li class="info-row">
+                <span class="info-label">Poste :</span>
+                <span class="info-value">Assistant informatique / gestion produits</span>
+              </li>
+            </ul>
+
+            <div class="mini-badges">
+              <span class="mini-badge">Site web</span>
+              <span class="mini-badge">Excel</span>
+              <span class="mini-badge">Photoshop</span>
+              <span class="mini-badge">IA</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="alternance">
+      <p style="text-align: center; margin-bottom: 30px;">Découvrez mon entreprise et mes missions à travers cette présentation.</p>
+      <div style="max-width: 900px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3);">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;">
+          <iframe src="présentation.sncf.pdf"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+              allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <h2 class="section-title">Mes Projets</h2>
+      <p class="section-subtitle">Travaux pratiques et projets réalisés</p>
+
+      <!-- Catégorie Cyber -->
+      <h3 style="color: var(--secondary-color); margin-top:2.5rem;">Projets Cybersécurité</h3>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-image">
+              <img src="METASPLOIT.png" alt="METASPLOIT">
+          </div>
+          <div class="project-content">
+            <h3>Exploitation d'une vulnérabilité avec Métasploit</h3>
+            <p>Identification et simulation d'attaques sur des systèmes vulnérables pour tester l'efficacité des correctifs.</p>
+            <div class="project-tags">
+              <span class="tag">Penetration Testing</span>
+              <span class="tag">Exploitation</span>
+              <span class="tag">Vulnérabilités</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP metasploit.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+                <article class="project-card">
+          <div class="project-image">
+              <img src="MITM.png" alt="MITM">
+          </div>
+          <div class="project-content">
+            <h3>Attaque MITM d'un service SSH</h3>
+            <p>Mise en œuvre d'une attaque Man-In-The-Middle pour comprendre les risques d'interception de données chiffrées.</p>
+            <div class="project-tags">
+              <span class="tag">Sécurité Réseau</span>
+              <span class="tag">ARP Spoofing</span>
+              <span class="tag">Analyse de Flux</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP mitm .pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+                </article>
+                <article class="project-card">
+          <div class="project-image">
+              <img src="GoPhish.jpg" alt="Phishing">
+          </div>
+          <div class="project-content">
+            <h3>Mise en place d'une attaque Phishing</h3>
+            <p>Déploiement d'une campagne de sensibilisation par simulation d'hameçonnage pour évaluer le facteur humain.</p>
+            <div class="project-tags">
+              <span class="tag">Ingénierie Sociale</span>
+              <span class="tag">Sensibilisation</span>
+              <span class="tag">Sécurité Mail</span>
+            </div>
+            <div class="project-actions">
+               <a href="projets/phishing.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Catégorie Système -->
+      <h3 style="color: var(--secondary-color); margin-top:2.5rem;">Projets Systèmes</h3>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-image">
+             <img src="active-directory.png" alt="Active Directory">
+          </div>
+          <div class="project-content">
+            <h3>Active Directory</h3>
+            <p>Administration des utilisateurs, GPO, et gestion du domaine Windows.</p>
+            <div class="project-tags">
+              <span class="tag">Windows Server</span>
+              <span class="tag">AD DS</span>
+              <span class="tag">GPO</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP Active Directory.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+              <img src="glpi.jpg" alt="GLPI">
+          </div>
+          <div class="project-content">
+            <h3>GLPI et OCS Inventory</h3>
+            <p>Déploiement d'une solution de gestion de parc informatique et ticketing.</p>
+            <div class="project-tags">
+              <span class="tag">Gestion de parc</span>
+              <span class="tag">Ticketing</span>
+              <span class="tag">Web</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP GLPI.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+             <img src="dhcp-dns.jpg" alt="DHCP et DNS">
+          </div>
+          <div class="project-content">
+            <h3>DHCP & DNS</h3>
+            <p>Mise en place et configuration de services DHCP et DNS sous Windows Server et Linux.</p>
+            <div class="project-tags">
+              <span class="tag">Windows Server</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Réseau</span>
+            </div>
+            <div class="project-actions">
+               <a href="projets/dhcp-dns.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+              <img src="NGINX.webp" alt="Nginx">
+          </div>
+          <div class="project-content">
+            <h3>Serveur Web Nginx</h3>
+            <p>Installation et configuration d'un serveur web haute performance et reverse proxy.</p>
+            <div class="project-tags">
+              <span class="tag">Linux</span>
+              <span class="tag">Web</span>
+              <span class="tag">Proxy</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP Nginx.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+              <img src="PFSENSE.png" alt="PFSENSE">
+          </div>
+          <div class="project-content">
+            <h3>PFSENSE</h3>
+            <p>Configuration de pare-feu, filtrage, VPN et portail captif avec pfSense.</p>
+            <div class="project-tags">
+              <span class="tag">Sécurité</span>
+              <span class="tag">Firewall</span>
+              <span class="tag">VPN</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP PFSENSE.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Catégorie Réseaux -->
+      <h3 style="color: var(--secondary-color); margin-top:2.5rem;">Projets Réseaux</h3>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-image">
+              <img src="HSRP.jpg" alt="Routage VLAN">
+          </div>
+          <div class="project-content">
+            <h3> Protocol HSRP</h3>
+            <p>Mise en place de la haute disponibilité du réseau grâce au protocole HSRP pour assurer 
+              la continuité de service en cas de panne d’un routeur.</p>
+            <div class="project-tags">
+              <span class="tag">Continuité de service</span>
+              <span class="tag">Haute disponibilité</span>
+              <span class="tag">Redondance réseau</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP HSRP.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image">
+              <img src="OSPF.jpg" alt="Routage VLAN">
+          </div>
+          <div class="project-content">
+            <h3> Protocol OSPF</h3>
+            <p>Configuration du protocole de routage dynamique OSPF afin d’optimiser le chemin des 
+              données et améliorer la performance du réseau.</p>
+            <div class="project-tags">
+              <span class="tag">Routage dynamique</span>
+              <span class="tag">Convergence</span>
+              <span class="tag">Réseau</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP OSPF.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+              <img src="ACL.jpg" alt="Routage VLAN">
+          </div>
+          <div class="project-content">
+            <h3>Configuration réseau et sécurisation par ACL</h3>
+            <p>Mise en œuvre des listes de contrôle d’accès (ACL) pour sécuriser le réseau et contrôler 
+              les flux de communication entre les différents segments.</p>
+            <div class="project-tags">
+              <span class="tag">Cisco</span>
+              <span class="tag">Filtrage</span>
+              <span class="tag">Trafic</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP ACL.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-image">
+              <img src="VTP.jpg" alt="Routage VLAN">
+          </div>
+          <div class="project-content">
+            <h3>Déploiement du protocol VTP</h3>
+            <p>Déploiement du protocole VTP pour centraliser et simplifier la gestion des VLANs sur 
+              l’ensemble des switches du réseau.</p>
+            <div class="project-tags">
+              <span class="tag">Synchronisation</span>
+              <span class="tag">Propagation VLAN</span>
+              <span class="tag">Réseau</span>
+            </div>
+            <div class="project-actions">
+               <a href="TP VTP.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-image">
+              <img src="vlan.jpg" alt="Routage VLAN">
+          </div>
+          <div class="project-content">
+            <h3>Routage Inter-VLAN</h3>
+            <p>Configuration du routage entre VLANs pour permettre la communication entre différents
+               réseaux tout en maintenant la segmentation.</p>
+            <div class="project-tags">
+              <span class="tag">Communication</span>
+              <span class="tag">Switching</span>
+              <span class="tag">Segmentation logique</span>
+            </div>
+            <div class="project-actions">
+               <a href="projets/vlan.pdf" class="btn btn-primary btn-project" target="_blank">Voir le projet</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+<!-- Veilles -->
+    <section id="services" class="section">
+      <h2 class="section-title">Veille technologique</h2>
+      <p class="section-subtitle">Thèmes suivis autour des réseaux, systèmes et cybersécurité</p>
+
+      <div class="veille-container">
+        <div class="veille-intro">
+          <h3>Objectif</h3>
+          <p>
+            La veille technologique consiste à surveiller les évolutions techniques, innovations, vulnérabilités et nouveaux outils dans le domaine de l’informatique.
+            Elle permet d’anticiper les changements, en particulier en cybersécurité.
+          </p>
+        </div>
+
+        <div class="veille-intro">
+          <h3>Sujet</h3>
+          <p>
+            L’intelligence artificielle (IA) occupe une place de plus en plus importante dans le domaine médical.
+            Grâce à l’analyse de grandes quantités de données (images, dossiers patients, résultats d’examens),
+            l’IA aide les professionnels de santé à améliorer les diagnostics, optimiser les traitements et gagner du temps dans leur pratique quotidienne.
+          </p>
+        </div>
+
+        <h3 style="text-align:center; margin-bottom:2rem; color:var(--text-dark);">Articles de référence</h3>
+
+        <div class="reference-grid">
+          <article class="reference-card">
+            <img src="L’IA et le diagnostic médical.webp" alt="L’IA et le diagnostic médical" class="reference-image">
+            <h4>IA dans le diagnostic médical</h4>
+            <p>L’intelligence artificielle peut analyser des images médicales et aider à détecter certaines maladies plus rapidement et avec plus de précision.</p>
+            <a href="https://lejournal.cnrs.fr/articles/des-logiciels-experts-en-diagnostic-medical" class="btn btn-outline" target="_blank">Voir l’article</a>
+          </article>
+
+          <article class="reference-card">
+            <img src="L’IA au service des médecins.png" alt="L’IA au service des médecins" class="reference-image">
+            <h4>L’IA au service des médecins</h4>
+            <p>Cet article explique comment l’intelligence artificielle aide les médecins à analyser des données médicales et à améliorer les diagnostics. Elle permet aussi de gagner du temps dans la prise de décision</p>
+            <a href="https://sante.lefigaro.fr/medecine/l-intelligence-artificielle-peut-elle-faire-un-bon-medecin-20250104?utm_source=chatgpt.com" class="btn btn-outline" target="_blank">Voir l’article</a>
+          </article>
+
+          <article class="reference-card">
+            <img src="L’IA dans la recherche de médicaments.jpg" alt="L’IA dans la recherche de médicaments" class="reference-image">
+            <h4>L’IA dans la recherche de médicaments</h4>
+            <p>L’IA permet d’analyser de nombreuses données scientifiques afin d’identifier des cibles thérapeutiques et d’accélérer la découverte de nouveaux traitements.</p>
+            <a href="https://www.medecinesciences.org/articles/medsci/full_html/2024/04/msc240005/msc240005.html" class="btn btn-outline" target="_blank">Voir l’article</a>
+          </article>
+        </div>
+
+        <div class="veille-intro">
+          <h3>Outils</h3>
+          <p>
+            Pour assurer une veille technologique efficace et rester informé des évolutions de manière continue, j’utilise plusieurs outils et sources d’information fiables.
+            Des services comme <strong>Google Alerts</strong> me permettent de recevoir automatiquement des articles récents en lien avec des mots-clés spécifiques (intelligence artificielle, santé, nouvelles technologies).
+            Je consulte également des sites spécialisés tels que <strong>Le Monde Informatique</strong>, ou encore des médias généralistes comme <strong>Reddit, Le petit digital et X.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="perspectives" class="section">
+      <h2 class="section-title">Perspectives futures</h2>
+      <p class="section-subtitle">Mes objectifs et aspirations</p>
+
+      <div class="about-content">
+        
+        <div class="about-text">
+          <p>
+            Dans la continuité de mon BTS, je souhaite orienter mon parcours vers la <strong>cybersécurité</strong>. Au cours de mes deux années d'alternance, j’ai développé des compétences en <strong>administration systèmes et réseaux</strong> ainsi qu’en <strong>support informatique</strong>, ce qui m’a permis de mieux comprendre les enjeux liés à la protection des systèmes d’information.
+          </p>
+          <p>
+            Mes certifications et projets m’ont également permis de découvrir les bases de la <strong>cybersécurité</strong> et des bonnes pratiques de <strong>protection des données</strong>.
+          </p>
+          <p>
+            À l’avenir, je souhaite approfondir mes compétences dans ce domaine en poursuivant mes études avec une <strong> licence en cybersecurité</strong>, avec l’objectif de travailler dans la <strong>sécurisation des systèmes et des infrastructures informatiques</strong>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">N'hésitez pas à me contacter</p>
+        
+        <div class="contact-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nom </label>
+                    <input type="text" id="name" placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Votre email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Votre message..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer </button>
+            </form>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-item-text">
+                        <h3>Localisation</h3>
+                        <p>Paris, France</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-item-text">
+                        <h3>Email</h3>
+                        <p>gadlevi17@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <div class="contact-item-text">
+                      <h3>LinkedIn</h3>
+                      <p><a href="https://www.linkedin.com/in/gad-levi" target="_blank" style="color: var(--secondary-color); text-decoration: underline;">linkedin.com/in/gad-levi</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Gad LEVI - Portfolio BTS SIO SISR. Tous droits réservés.</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // Script simple pour le burger menu en mobile
+    const burger = document.getElementById('burger');
+    const sidebar = document.getElementById('sidebar');
+
+    burger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+
+    // Fermer le menu quand on clique sur un lien
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+    });
+
+    // Scrollspy pour la navbar
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80;
+        const sectionHeight = section.offsetHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').replace('#', '') === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
